@@ -21,23 +21,8 @@ Host virthost
 
 {% endif %}
 
-Host undercloud-root
-{% if undercloud_type == 'virtual' %}
-    ProxyCommand {{ undercloud_ssh_proxy_command }}
-{% else %}
-    Hostname {{ undercloud_ip }}
-{% endif %}
-    IdentityFile {{ hostvars['undercloud'].ansible_private_key_file }}
-    User root
-    StrictHostKeyChecking no
-    UserKnownHostsFile=/dev/null
-
 Host undercloud
-{% if undercloud_type == 'virtual' %}
-    ProxyCommand {{ undercloud_ssh_proxy_command }}
-{% else %}
-    Hostname {{ undercloud_ip }}
-{% endif %}
+    Hostname {{ hostvars['undercloud'].ansible_host }}
     IdentityFile {{ hostvars['undercloud'].ansible_private_key_file }}
     User {{ undercloud_user }}
     StrictHostKeyChecking no
@@ -47,7 +32,7 @@ Host undercloud
 {% for host in groups["overcloud"] %}
 
 Host {{ host }}
-    ProxyCommand ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o ConnectTimeout=60 -F {{ local_working_dir }}/ssh.config.ansible undercloud -W {{ hostvars[host].ansible_fqdn }}:22
+    ProxyCommand {{ ssh_proxy_command  }} -W {{ hostvars[host].private_v4 }}:22
     IdentityFile {{ hostvars[host].ansible_private_key_file }}
     User {{ overcloud_user | default ('heat-admin') }}
     StrictHostKeyChecking no

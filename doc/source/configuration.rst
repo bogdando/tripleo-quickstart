@@ -85,3 +85,57 @@ By default, the kernel executable and initial rootfs for an undercloud VM
 are extracted from the overcloud image. In order to switch to custom
 ``undercloud_custom_initrd`` and ``undercloud_custom_vmlinuz`` images,
 set the ``undercloud_use_custom_boot_images`` to True.
+
+Consuming OpenStack hosted VM instances as overcloud/undercloud nodes
+---------------------------------------------------------------------
+
+Nodes pre-provisioned by openstack providers may be consumed by quickstart
+ansible roles by specifying the ``inventory: openstack`` var. You should also
+provide valid user names and paths to ssh keys in the ``overcloud_user``,
+``overcloud_key``, ``undercloud_user``, ``undercloud_key`` variables.
+
+.. note:: The ``ssh_user`` should be refering to the same value as the
+  ``undercloud_user``.
+
+Finally, the `stackrc` or `clouds.yaml` content should be passed via the
+``stackrc`` or ``clouds_yaml``.
+
+Here is an example playbook to generate ansible inventory file and ssh config:
+
+.. code-block:: yaml
+
+  ---
+  - name: Generate inventory for openstack provider
+    hosts: localhost
+    any_errors_fatal: true
+    gather_facts: true
+    become: false
+    vars:
+      undercloud_user: centos
+      ssh_user: centos
+      non_root_user: centos
+      overcloud_user: centos
+      inventory: openstack
+      clouds_yaml: >
+        clouds:
+            cool-cloud:
+                auth:
+                    auth_url: https://cool.cloud.lc/
+                    project_name: fuser
+                    username: fuser
+                    password: secret
+                region: RegionOne
+      overcloud_key: '{{ working_dir }}/fuser.pem'
+      undercloud_key: '{{ working_dir }}/fuser.pem'
+    roles:
+      - tripleo-inventory
+
+Next, you may want to check the nodes are ready to proceed with further
+deployment steps:
+
+.. code-block:: bash
+
+  ansible --ssh-common-args='-F $HOME/.quickstart/ssh.config.ansible' \
+   -i $HOME/.quickstart/hosts all -m ping
+
+See also: `traas <https://github.com/slagle/traas>`_.

@@ -73,10 +73,10 @@ The following is a list of design decisions made to solve the problem.
     * Create a easy to use script to execute tripleo-quickstart e.g.
       quickstart.sh that Jake can just download and execute::
 
-      Example:
-        wget https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
+        Example:
+          wget https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh
 
-        bash quickstart.sh <host>
+          bash quickstart.sh <host>
 
   Solve for Scenario #2
     * Allow Joan to use libvirt guests, `bare metal <https://images.rdoproject.org/docs/
@@ -153,7 +153,8 @@ could provide both scripts and documentation to users,
 playbooks_templating.html>`_ was chosen.
 
 Make a tool that is attractive to OpenStack developers
-=====================================================
+======================================================
+
 It is critical that OpenStack developers can develop and test their patches
 **outside** of the OpenStack CI system in the same way that they are tested
 **inside** the CI system, developers need to be able to recreate CI results.

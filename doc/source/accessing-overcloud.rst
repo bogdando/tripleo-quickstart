@@ -10,6 +10,14 @@ host as documented in :ref:`accessing-undercloud` is sufficient, but there are
 situations when you may want direct access to overcloud services from your
 desktop.
 
+Note, when the overcloud nodes are hosted at OpenStack cloud instead, that
+works as well but the ssh access user name may be 'centos' or the like and you
+may not be able to login as root. And when deploying with
+`traas <https://github.com/slagle/traas>`_, node names will be prefixed with the
+given heat stack name, like `traas-overcloud-0`. The undercloud node should be
+given a floating IP and will be serving as a bastion host proxying ansible/ssh
+to overcloud nodes.
+
 Logging in to overcloud hosts
 -----------------------------
 
