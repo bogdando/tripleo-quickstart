@@ -53,6 +53,7 @@
     ansible_fqdn: "{{ virthost }}"
     ansible_user: "root"
     ansible_host: "{{ virthost }}"
+    ansible_connection: "{{ (virthost == 'localhost') | ternary('local' , omit) }}"
 
 # The following idempotent code ensures when running
 # with 127.0.0.2 that the non_root_user facts are known

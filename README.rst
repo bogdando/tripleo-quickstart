@@ -45,6 +45,10 @@ below::
     deployer ALL=(ALL) NOPASSWD: ALL
 
 ..  note::
+    When ``$VIRTHOST`` is 'localhost', the local connection transport will be
+    used, so SSH access is not required for that case.
+
+..  note::
     Running quickstart.sh commands as root is not suggested or supported.
 
 The SSH server on your ``$VIRTHOST`` must be accessible via public keys for

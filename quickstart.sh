@@ -538,10 +538,23 @@ source $OOOQ_DIR/ansible_ssh_env.sh
 if [ "$OPT_RETAIN_INVENTORY_FILE" = 0 -a -z "$OPT_LIST_TASKS_ONLY" ]; then
     # Clear out inventory file to avoid tripping over data
     # from a previous invocation
-    cat >$ANSIBLE_INVENTORY <<EOF
+    rm -f $ANSIBLE_INVENTORY
+    if [ "${VIRTHOST}" = "localhost" ]; then
+        # Provide a throw-away inventory for initial ansible steps.
+        # It gets overwritten with real inventory hosts in the progress.
+        cat << EOF > $ANSIBLE_INVENTORY
+localhost ansible_connection=local
+virthost ansible_connection=local
+[virthost]
+localhost
+EOF
+    else
+        rm -f $ANSIBLE_INVENTORY
+        cat >$ANSIBLE_INVENTORY <<EOF
 [localhost]
 127.0.0.1  ansible_connection=local
 EOF
+    fi
 fi
 
 if [ "$OPT_DEBUG_ANSIBLE" = 1 ]; then

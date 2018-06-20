@@ -133,6 +133,7 @@
     ansible_user: "{{ ssh_user }}"
     ansible_host: "{{ virthost }}"
     ansible_private_key_file: "{{ virt_host_key }}"
+    ansible_connection: "{{ (virthost == 'localhost') | ternary('local' , omit) }}"
 
 # Create the volume pool directory if it doesn't already exist.  This
 # will be the target of the libvirt volume pool we create in the next
