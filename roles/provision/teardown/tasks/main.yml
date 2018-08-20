@@ -8,7 +8,10 @@
   changed_when: false
 
 # If the non-root user exists, perform a variety of cleanup tasks.
-- when: non_root_uid is success
+# Excepting the non-disposable local devbox case
+- when:
+    - non_root_uid is success
+    - not safe_teardown|default(false)|bool
   block:
     # Look for and kill any processes owned by the non-root user.
     # This will let us remove the user later on.

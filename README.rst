@@ -46,7 +46,11 @@ below::
 
 ..  note::
     When ``$VIRTHOST`` is 'localhost', the local connection transport will be
-    used, so SSH access is not required for that case.
+    used, so SSH access is not required for that case. Assuming the deployment
+    will be done on a non-disposable local devbox, there is `safe_teardown: true`
+    setting, which tells Quickstart to be more carefull, when doing destructive
+    teardown actions and avoid killing the user's processes or uninstalling
+    libvirt packages.
 
 ..  note::
     Running quickstart.sh commands as root is not suggested or supported.
