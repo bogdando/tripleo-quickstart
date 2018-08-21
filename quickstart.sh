@@ -305,7 +305,7 @@ while [ "x$1" != "x" ]; do
             ;;
 
         --tags-overcloud-prep|-o)
-            OPT_TAGS="${OPT_TAGS:+$OPT_TAGS,$DEFAULT_OPT_OVERCLOUD_PREP_TAGS}"
+            OPT_TAGS="${OPT_TAGS:+$OPT_TAGS,$DEFAULT_OPT_OVERCLOUD_PREP_TAGS,$DEFAULT_OPT_OVERCLOUD_DEPLOY_TAGS}"
             shift
             ;;
 
