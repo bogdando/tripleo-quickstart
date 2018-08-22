@@ -368,6 +368,7 @@
     mode: "a+x"
     recurse: true
     state: 'directory'
+  become: true
   when: non_root_chown|bool
 
 # Start the undercloud virtual machine and make it
