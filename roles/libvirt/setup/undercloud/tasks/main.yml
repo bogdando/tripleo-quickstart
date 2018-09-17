@@ -59,6 +59,15 @@
     - include_tasks: update_image.yml
       when: devmode|bool
 
+    - name: Inject undercloud user into the cloud image
+      when: libvirt_use_cloud_image|default(False)|bool
+      command: >
+        virt-customize -a {{ working_dir }}/undercloud.qcow2
+        --uninstall cloud-init
+        --run-command "useradd -m -p '' -U {{ undercloud_user }}"
+        --run-command "echo '{{ undercloud_user }} ALL=NOPASSWD:ALL' >> /etc/sudoers"
+        --run-command "echo 'Defaults:{{ undercloud_user }} !requiretty' >> /etc/sudoers"
+    
     # Inject updated overcloud and ipa images into our converted undercloud
     # image
     - name: Inject additional images
@@ -71,6 +80,7 @@
       when:
         - overcloud_as_undercloud|bool or use_external_images|bool
         - inject_images|length > 0
+
 
     # This copies the `instackenv.json` configuration file that we
     # generated in the overcloud setup role to the undercloud host.
