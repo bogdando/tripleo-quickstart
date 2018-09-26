@@ -44,7 +44,9 @@
         name: "{{ non_root_user }}"
         state: present
         shell: /bin/bash
-        create_home: true
+        create_home: yes
+        append: yes
+        groups: wheel
       become: true
 
 - name: Get the non-root user UID
