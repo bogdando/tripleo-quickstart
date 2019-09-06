@@ -67,7 +67,7 @@
         --run-command "useradd -m -p '' -U {{ undercloud_user }}"
         --run-command "echo '{{ undercloud_user }} ALL=NOPASSWD:ALL' >> /etc/sudoers"
         --run-command "echo 'Defaults:{{ undercloud_user }} !requiretty' >> /etc/sudoers"
-    
+
     # Inject updated overcloud and ipa images into our converted undercloud
     # image
     - name: Inject additional images
@@ -80,7 +80,6 @@
       when:
         - overcloud_as_undercloud|bool or use_external_images|bool
         - inject_images|length > 0
-
 
     # This copies the `instackenv.json` configuration file that we
     # generated in the overcloud setup role to the undercloud host.

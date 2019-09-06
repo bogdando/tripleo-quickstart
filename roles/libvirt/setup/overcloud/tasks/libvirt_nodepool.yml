@@ -200,8 +200,4 @@
 - include_tasks: register_vm.yml
   with_items: "{{ overcloud_nodes }}"
 
-- name: Create inventory suitable for zuul-jobs/multinode
-  template:
-    src: "{{ zuul_hosts_template }}"
-    dest: "{{ local_working_dir }}/zuul-hosts.yaml"
-    mode: 0755
+- include_tasks: zuul_multinode_inventory.yml

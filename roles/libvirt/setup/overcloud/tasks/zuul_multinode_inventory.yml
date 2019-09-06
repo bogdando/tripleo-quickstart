@@ -1,0 +1,6 @@
+---
+- name: Create inventory suitable for zuul-jobs/multinode
+  template:
+    src: "{{ zuul_hosts_template }}"
+    dest: "{{ local_working_dir }}/zuul-hosts.yaml"
+    mode: 0755

@@ -1,3 +1,5 @@
+- include_tasks: eval_subnode_ips.yml
+
 - name: Get libvirt nodepool IP addresses
   script: "get-domain-ip.sh {{ item.name }}"
   register: "ip_result"
