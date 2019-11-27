@@ -3,11 +3,13 @@ all:
     peers:
       hosts:
         secondary: null
-      vars: {}
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
     switch:
       hosts:
         primary: null
-      vars: {}
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
   hosts:
     primary:
       ansible_connection: ssh
