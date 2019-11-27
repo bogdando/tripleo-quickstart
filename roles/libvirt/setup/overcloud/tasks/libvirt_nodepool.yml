@@ -98,6 +98,7 @@
   file:
     path: "{{ working_dir }}/pwtemp"
     state: absent
+  when: modify_image_vc_root_password is not defined
 
 - name: Resize the filesystem
   shell: >
